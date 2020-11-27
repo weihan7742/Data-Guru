@@ -13,17 +13,16 @@
 
 <body>
   <h1>My Google Map</h1>
-  <div id="map"></div>
-  <center>
-    <select class="select-css">
-      <option>ATM</option>
-      <option>Accomodation</option>
-      <option>Zoo</option>
-      <option>Youth organization</option>
-      <option>Yoga studio</option>
-    </select>
-  </center>
-
+  <div class="home">
+    <div id="map" style="grid-area: map;"></div>
+    <div class="checkbox-style" style="grid-area: selection;" id="filter">
+      <label><input type="checkbox" value="ATM">ATM</label><br>
+      <label><input type="checkbox" value="Accomodation">Accomodation</label><br>
+      <label><input type="checkbox" value="ATM">Zoo</label><br>
+      <label><input type="checkbox" value="ATM">Youth organization</label><br>
+      <label><input type="checkbox" value="ATM">Yoga studio</label><br>
+    </div>
+  </div>
   <script src="map2.js"></script>
 
 </body>

@@ -1,3 +1,8 @@
+.home {
+  display: grid;
+  grid-template-areas: "map selection";
+  grid-template-columns: auto 15%;
+}
 #map {
   height: 600px;
   width: 100%;
@@ -6,18 +11,14 @@
   margin-bottom: 10px;
   padding: 0.8em 0.8em 0.8em 0.8em;
 }
-.select-css {
-  display: inline;
-  height: 45px;
-  line-height: 1.3;
-  padding: 0.6em 1em 0.5em 0.8em;
-  width: 250px;
-  max-width: 270px;
+.checkbox-style {
+  height: 600px;
+  border: 1px solid #aaa;
+  padding-top: 10px;
   box-sizing: border-box;
-  margin: 0;
+  margin-left: 5px;
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
-  background-color: #e0e1dd;
-  margin-right: 50px;
+  background-color: #dde0e1;
 }
