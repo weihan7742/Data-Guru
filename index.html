@@ -1,19 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
-    <title>Document</title>
-  </head>
-<body>
-    <h1>My Google Map</h1>  
-    <div id="map"></div>
 
-    <script src="map2.js"></script>
-    <script
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="style.css">
+  <title>Document</title>
+  <script
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD8P1OPDqYPIXuo6FdCqzo3Jib3E2A-GUg&callback=initMap&libraries=&v=weekly"
-    defer
-  ></script>
+    defer></script>
+</head>
+
+<body>
+  <h1>My Google Map</h1>
+  <div id="map"></div>
+  <center>
+    <select class="select-css">
+      <option>ATM</option>
+      <option>Accomodation</option>
+      <option>Zoo</option>
+      <option>Youth organization</option>
+      <option>Yoga studio</option>
+    </select>
+  </center>
+
+  <script src="map2.js"></script>
+
 </body>
+
 </html>
