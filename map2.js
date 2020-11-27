@@ -8,7 +8,7 @@ function initMap(){
         const data = await response.text();
         
         var tempArr = [];
-        const rows = data.split('\n').slice(1);
+        const rows = data.split('\n').slice(1); // Remove header
         rows.forEach(elt => {
             var tempDict = {};
             const row = elt.split(',');
