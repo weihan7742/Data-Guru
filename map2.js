@@ -24,13 +24,14 @@ function initMap(){
 
     (async() => {
         arr = await getData();
-
+        
+        // Initialize center of map
         var options = {
             zoom:8,
             center:{lat:3.1390,lng:101.6869}
         }   
 
-        // New map 
+        // Create a new map 
         var map = new google.maps.Map(document.getElementById('map'),options);
 
         // Loop through markers
