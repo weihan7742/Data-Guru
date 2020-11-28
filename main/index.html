@@ -23,23 +23,6 @@
 <body>
   <!-- Uses a transparent header that draws on top of the layout's background -->
   <div class="layout-transparent mdl-layout mdl-js-layout">
-    <header class="mdl-layout__header">
-      <div class="mdl-layout__header-row">
-        <!-- Title -->
-        <span class="mdl-layout-title default-font">
-          <a class="headerpage" href="index.html">
-            Data Guru
-          </a>
-        </span>
-        <!-- Add spacer, to align navigation to the right -->
-        <div class="mdl-layout-spacer"></div>
-        <!-- Navigation -->
-        <nav class="mdl-navigation" id="displayArea">
-          <!-- <a class="mdl-navigation__link" href="login.html" id="loginout">Login</a> -->
-          <!-- <i class="material-icons">person</i><span class="default-font">&nbsp;<span id="username">Guest</span></span> -->
-        </nav>
-      </div>
-    </header>
     <main class="mdl-layout__content">
       <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
         <div class="w3-display-middle">
@@ -73,8 +56,6 @@
 
           <!--Change to filter list-->
           <div class="inputSec" style="grid-area: input;">
-            <center class="inputSecCenter">
-              <input type="text" id="categoryInput" onkeyup="filterFunction()" placeholder="Search for categories...">
               <div class="board board-2" style="grid-area: filter;">
                 <ul id="myUL">
                   <li><button value='ATM' onclick=selectFunction(this.value)>ATM</button></li>
@@ -2018,9 +1999,6 @@
                   <li><button value='Zoo' onclick=selectFunction(this.value)>Zoo</button></li>
                 </ul>
               </div>
-            </center>
-          <div id="display"></div>
-
           </div>
         </div>
       </div>
