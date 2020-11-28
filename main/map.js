@@ -8,7 +8,7 @@ var plottedMarker = {};
 // Initialize map
 function initMap(){
 
-    retrieveMarkerData('test_csv.json');
+    retrieveMarkerData('googlemapsdata.json');
     getData();
 
     var options = {
