@@ -19,7 +19,7 @@ body {
 }
 
 .layout-transparent {
-  background-color: #091945;
+  background-color: #001b2a;
 }
 
 .layout-transparent .mdl-layout__header {
@@ -80,7 +80,7 @@ body {
   white-space: nowrap;
   margin: 0 auto;
   user-select: none;
-  background-color: #091945;
+  background-color: black;
   font-size: 64px;
   color: #e0e1dd;
 
@@ -136,7 +136,7 @@ body {
 
 /* First image (Logo. Full height) */
 .bgimg-1 {
-  background-image: url("https://images.pexels.com/photos/2245436/pexels-photo-2245436.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
+  background-image: url("https://images.pexels.com/photos/240834/pexels-photo-240834.jpeg?cs=srgb&dl=pexels-lorenzo-240834.jpg&fm=jpg");
   min-height: 40%;
 }
 
@@ -151,7 +151,7 @@ body {
 }
 
 .container {
-  height: 95%;
+  height: 1238px;
   width: 98%;
   display: grid;
   grid-template-columns: 350px auto;
@@ -165,11 +165,13 @@ body {
 .info {
   height: 100%;
   color: #e0e1dd;
+
   box-sizing: border-box;
+  border: 2px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
-  background-color: #001b2a;
-  grid-template-rows: 100px auto auto;
+  background-color: #778da9;
+  grid-template-rows: 200px auto auto;
   grid-gap: 10px 5px;
   grid-template-areas:
     "info"
@@ -193,22 +195,29 @@ body {
 }
 
 .board {
-  width: 100%;
   box-sizing: border-box;
+  border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
+<<<<<<< HEAD
   overflow-y: auto;
   height: 220px;
   white-space: nowrap;
+=======
+  border-radius: 0.5em;
+  background: #415a77; 
+  overflow: auto;
+  overflow-x: auto;
+  white-space: normal;
+  padding: 2%;
+>>>>>>> parent of 294814b... tweaks
 }
 
 .board-1 {
-  border-bottom: 1px solid #aaa;
-  height: auto;
-  background: #ffffff;
-  color: #000000;
+  height: 100px;
 }
 
 .board-2 {
+<<<<<<< HEAD
   border: 1px solid #aaa;
   background: #e5e5e5;
   min-height: 2%;
@@ -217,6 +226,9 @@ body {
   padding-bottom: 20px;
   border-bottom-left-radius: 1em;
   border-bottom-right-radius: 1em;
+=======
+  height: 88%;
+>>>>>>> parent of 294814b... tweaks
 }
 
 #myUL {
@@ -246,6 +258,7 @@ body {
   font-size: 16px; /* Increase font-size */
   padding: 12px 20px 12px 40px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
+<<<<<<< HEAD
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   background-color: #fca311;
@@ -287,3 +300,7 @@ button {
   border: 1px solid #ddd; /* Add a grey border */
   margin-top: 1px;
 }
+=======
+  border-radius: 0.4em;
+}
+>>>>>>> parent of 294814b... tweaks

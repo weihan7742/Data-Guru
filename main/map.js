@@ -152,10 +152,10 @@ function deleteChip(index){
 
 // Function to display chip
 function displayChip(){
-  let output = ``; // To be printed
+  let output = `<div>Filter keyword: </div>`; // To be printed
   // Print out value 
   for(i=0;i<chipOutput.length;i++){
-    output += `<div class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+    output += `    <div class="mdl-chip mdl-chip--contact mdl-chip--deletable">
     <span class="mdl-chip__contact mdl-color-text--white theme-color-2">${i + 1}</span>
     <span class="mdl-chip__text default-font" style="width: auto;">${chipOutput[i]}</span>
     <a class="mdl-chip__action"><i class="material-icons" onclick="deleteChip(${i})">cancel</i></a>
@@ -175,20 +175,4 @@ function displayMarker(){
       addMarker(tempArr[j],map);
     }
   }
-}
-
-//expandable
-var coll = document.getElementsByClassName("collapsible");
-var i;
-
-for (i = 0; i < coll.length; i++) {
-  coll[i].addEventListener("click", function() {
-    this.classList.toggle("active");
-    var content = this.nextElementSibling;
-    if (content.style.display === "block") {
-      content.style.display = "none";
-    } else {
-      content.style.display = "block";
-    }
-  });
 }
