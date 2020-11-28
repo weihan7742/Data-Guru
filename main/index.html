@@ -23,6 +23,23 @@
 <body>
   <!-- Uses a transparent header that draws on top of the layout's background -->
   <div class="layout-transparent mdl-layout mdl-js-layout">
+    <header class="mdl-layout__header">
+      <div class="mdl-layout__header-row">
+        <!-- Title -->
+        <span class="mdl-layout-title default-font">
+          <a class="headerpage" href="index.html">
+            Data Guru
+          </a>
+        </span>
+        <!-- Add spacer, to align navigation to the right -->
+        <div class="mdl-layout-spacer"></div>
+        <!-- Navigation -->
+        <nav class="mdl-navigation" id="displayArea">
+          <!-- <a class="mdl-navigation__link" href="login.html" id="loginout">Login</a> -->
+          <!-- <i class="material-icons">person</i><span class="default-font">&nbsp;<span id="username">Guest</span></span> -->
+        </nav>
+      </div>
+    </header>
     <main class="mdl-layout__content">
       <div class="bgimg-1 w3-display-container w3-opacity-min" id="home">
         <div class="w3-display-middle">
@@ -34,6 +51,7 @@
       <br />
 
 
+
       <!--Change to filter list here-->
       <div class="container">
 
@@ -42,14 +60,14 @@
 
         <!-- LHS Section -->
         <div class="info" style="grid-area: info">
-          <div style="grid-area: input;">
-            <input type="text" id="categoryInput" onkeyup="filterFunction()" placeholder="Search for categories...">
-          </div>
-
-          <!-- Selected Section -->
-          <div class="default-font" style="grid-area: selected;" id="routeSec">
-            <div class="board board-1" id="chipDisplay">
-              <div class="default-font">Filter keyword: </div>
+          <!-- Route Section -->
+          <div class="default-font" style="grid-area: info2;" id="routeSec">
+            <div class="default-font">
+              <h2 class="default-font">Selected</h2>
+            </div>
+            <div class="board routeSecBoard">
+              <div id="chipDisplay">
+              </div>
             </div>
           </div>
 

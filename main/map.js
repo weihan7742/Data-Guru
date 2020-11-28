@@ -17,6 +17,7 @@ function initMap(){
     }
 
     map = new google.maps.Map(document.getElementById('map'),options);
+    var count = 1;
     for(var i=0; i<dataStorage.length; i++){
       if(typeof markerCategory[dataStorage[i].category] == "undefined"){
         markerCategory[dataStorage[i].category] = [];
@@ -152,14 +153,15 @@ function deleteChip(index){
 
 // Function to display chip
 function displayChip(){
-  let output = `<div>Filter keyword: </div>`; // To be printed
+  let output = ` `; // To be printed
   // Print out value 
   for(i=0;i<chipOutput.length;i++){
-    output += `    <div class="mdl-chip mdl-chip--contact mdl-chip--deletable">
+    output += `    <div class="mdl-chip mdl-chip--contact mdl-chip--deletable" onclick="deleteChip(${i})">
     <span class="mdl-chip__contact mdl-color-text--white theme-color-2">${i + 1}</span>
-    <span class="mdl-chip__text default-font" style="width: auto;">${chipOutput[i]}</span>
-    <a class="mdl-chip__action"><i class="material-icons" onclick="deleteChip(${i})">cancel</i></a>
-  </div>`; 
+    <span class="mdl-chip__text default-font" style="width: 150px;">${chipOutput[i]}</span>
+    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
+  </div>
+  <br/>`; 
   }
 
   return output;
