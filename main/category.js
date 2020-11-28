@@ -19,11 +19,38 @@ function filterFunction() {
     }
   }
 
-var output = ` `
+var chipOutput = []; // Store unique categories
 
 function selectFunction(value){
-    console.log("Clicked successful!");
-    output +=
-    `<p>${value}</p>`
-    document.getElementById('chipDisplay').innerHTML = output;
+    console.log("Clicked successful!"); // Testing purpose
+    
+    // Check if value is in list already
+    const chipExist = chipOutput.includes(value);
+    
+    // Add value if not exist
+    if(!chipExist){
+      chipOutput.push(value);
+    }
+
+    document.getElementById('chipDisplay').innerHTML = displayChip();
+}
+
+function deleteChip(index){
+  chipOutput.splice(index,1); 
+  document.getElementById('chipDisplay').innerHTML = displayChip();
+}
+
+function displayChip(){
+  let output = ` `; // To be printed
+  // Print out value 
+  for(i=0;i<chipOutput.length;i++){
+    output += `    <div class="mdl-chip mdl-chip--contact mdl-chip--deletable" onclick="deleteChip(${i})">
+    <span class="mdl-chip__contact mdl-color-text--white theme-color-2">${i + 1}</span>
+    <span class="mdl-chip__text default-font" style="width: 150px;">${chipOutput[i]}</span>
+    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
+  </div>
+  <br/>`; 
+  }
+
+  return output;
 }
