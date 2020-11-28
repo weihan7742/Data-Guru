@@ -68,6 +68,18 @@ function addMarker(props,currentMap){
     icon: props.iconImage
 });
 
+    var infoWindow = new google.maps.InfoWindow({
+        content:props.content
+    });
+
+    marker.addListener('mouseover', function(){
+        infoWindow.open(map,marker)
+    });
+
+    marker.addListener('mouseout',function(){
+        infoWindow.close(map,marker)
+    })
+
     // Store markers which are plotted
     if(typeof plottedMarker[props.category] == "undefined"){
       plottedMarker[props.category] = [];
@@ -80,21 +92,6 @@ function addMarker(props,currentMap){
     if(props.iconImage){
         // Set icon image
         marker.setIcon(props.iconImage);
-    }
-
-    // Check for content
-    if(props.content){
-        var infoWindow = new google.maps.InfoWindow({
-            content:props.content
-        });
-
-        marker.addListener('mousemove', function(){
-            infoWindow.open(map,marker)
-        });
-
-        marker.addListener('mouseout',function(){
-            infoWindow.close(map,marker)
-        })
     }
 }
 
