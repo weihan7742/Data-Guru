@@ -199,10 +199,13 @@ body {
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
 <<<<<<< HEAD
+<<<<<<< HEAD
   overflow-y: auto;
   height: 220px;
   white-space: nowrap;
 =======
+=======
+>>>>>>> parent of 294814b... tweaks
   border-radius: 0.5em;
   background: #415a77; 
   overflow: auto;
@@ -218,6 +221,7 @@ body {
 
 .board-2 {
 <<<<<<< HEAD
+<<<<<<< HEAD
   border: 1px solid #aaa;
   background: #e5e5e5;
   min-height: 2%;
@@ -228,6 +232,14 @@ body {
   border-bottom-right-radius: 1em;
 =======
   height: 88%;
+>>>>>>> parent of 294814b... tweaks
+=======
+  height: 88%;
+}
+
+#info {
+  margin-top: 4px;
+  margin-left: 4px;
 >>>>>>> parent of 294814b... tweaks
 }
 
@@ -258,6 +270,7 @@ body {
   font-size: 16px; /* Increase font-size */
   padding: 12px 20px 12px 40px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
+<<<<<<< HEAD
 <<<<<<< HEAD
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
@@ -300,6 +313,10 @@ button {
   border: 1px solid #ddd; /* Add a grey border */
   margin-top: 1px;
 }
+=======
+  border-radius: 0.4em;
+}
+>>>>>>> parent of 294814b... tweaks
 =======
   border-radius: 0.4em;
 }
