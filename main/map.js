@@ -1,33 +1,13 @@
 
 var arr = [];
 var markerLocation = [];
+var result;
 
 // Initialize map
 function initMap(){
-    var result;
-    var jsonData= (function() {
-        $.ajax({
-            type:'GET',
-            url:'test_csv.json',
-            dataType:'json',
-            async:false,
-            success:function(data){
-                result = data;
-            }
-        });
-        return result;
-    })();
-    
-    getData();
 
-    function getData(){
-      for(i=0; i<result.length;i++){
-        let tempDict ={};
-        tempDict["coords"] = {lat:result[i].Lat, lng: result[i].Lng};
-        tempDict["content"] = '<p>'+result[i].Name+'</p>';
-        arr.push(tempDict);
-      }
-    }
+    retrieveJSON();
+    getData();
 
     var options = {
       zoom:8,
@@ -41,10 +21,39 @@ function initMap(){
       markerLocation.push(arr[i]);
     } 
 
+    console.log(markerLocation);
+
     // Adding geojson data 
     map.data.loadGeoJson(
         "https://storage.googleapis.com/mapsdevsite/json/google.json"
     )
+}
+
+// Retrieve raw markers data
+function retrieveJSON(){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url:'test_csv.json',
+        dataType:'json',
+        async:false,
+        success:function(data){
+            result = data;
+        }
+    });
+    return result;
+  })();
+}
+
+// Function to set markers format
+function getData(){
+  for(i=0; i<result.length;i++){
+    let tempDict ={};
+    tempDict["coords"] = {lat:result[i].Lat, lng: result[i].Lng};
+    tempDict["content"] = '<p>'+result[i].Name+'</p>';
+    tempDict["category"] = result[i].Category;
+    arr.push(tempDict);
+  }
 }
 
 // Function to add markers
@@ -77,6 +86,7 @@ function addMarker(props,currentMap){
     }
 }
 
+// Search box function
 function filterFunction() {
     // Declare variables
     var input, filter, ul, li, a, i, txtValue;
@@ -99,6 +109,7 @@ function filterFunction() {
 
 var chipOutput = []; // Store unique categories
 
+// Function to select chip 
 function selectFunction(value){
     console.log("Clicked successful!"); // Testing purpose
     
@@ -113,11 +124,13 @@ function selectFunction(value){
     document.getElementById('chipDisplay').innerHTML = displayChip();
 }
 
+// Function to delete selected chip
 function deleteChip(index){
   chipOutput.splice(index,1); 
   document.getElementById('chipDisplay').innerHTML = displayChip();
 }
 
+// Function to display chip
 function displayChip(){
   let output = ` `; // To be printed
   // Print out value 
@@ -131,5 +144,10 @@ function displayChip(){
   }
 
   return output;
+}
+
+// Display marker 
+function displayMarker(){
+  // loop through chipoutput
 }
 
