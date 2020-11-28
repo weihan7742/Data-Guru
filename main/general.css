@@ -41,33 +41,15 @@ body {
   color: #e0e1dd;
 }
 
-.black-text {
-  color: black;
-}
-
-#loginout:hover {
-  background-color: #1b263b;
-  margin-bottom: 10px;
-}
-
-.icon {
-  width: 64px;
-}
-
 .map-style {
   box-sizing: border-box;
   border-radius: 0.6em;
   padding: 0.8em 0.8em 0.8em 0.8em;
 }
 
-.headerpage {
-  text-decoration: none;
-}
 /* ----------index.html section---------- */
 /* Create a Parallax Effect */
-.bgimg-1,
-.bgimg-2,
-.bgimg-3 {
+.bgimg-1{
   background-attachment: fixed;
   background-position: center;
   background-repeat: no-repeat;
@@ -80,10 +62,9 @@ body {
   white-space: nowrap;
   margin: 0 auto;
   user-select: none;
-  background-color: black;
+  background-color: #091945;
   font-size: 64px;
   color: #e0e1dd;
-
   animation: typing 3.6s steps(30, end), blink-caret 1s step-end infinite;
 }
 
@@ -136,7 +117,7 @@ body {
 
 /* First image (Logo. Full height) */
 .bgimg-1 {
-  background-image: url("https://images.pexels.com/photos/240834/pexels-photo-240834.jpeg?cs=srgb&dl=pexels-lorenzo-240834.jpg&fm=jpg");
+  background-image: url("https://images.pexels.com/photos/2245436/pexels-photo-2245436.png?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940");
   min-height: 40%;
 }
 
@@ -151,7 +132,7 @@ body {
 }
 
 .container {
-  height: 1238px;
+  height: 95%;
   width: 98%;
   display: grid;
   grid-template-columns: 350px auto;
@@ -198,11 +179,6 @@ body {
   box-sizing: border-box;
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
-  overflow-y: auto;
-  height: 220px;
-  white-space: nowrap;
-  border-radius: 0.5em;
-  background: #415a77;
   border-radius: 0.5em;
   background: #415a77;
   overflow: auto;
@@ -216,15 +192,6 @@ body {
 }
 
 .board-2 {
-
-  border: 1px solid #aaa;
-  background: #e5e5e5;
-  min-height: 2%;
-  max-height: 70%;
-  margin-top: 1px;
-  padding-bottom: 20px;
-  border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
   height: 88%;
 }
 
