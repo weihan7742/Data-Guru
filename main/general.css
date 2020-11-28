@@ -154,28 +154,31 @@ body {
   width: 98%;
   display: grid;
   grid-template-columns: 350px auto;
+  grid-template-rows: 100px auto;
   grid-gap: 10px 5px;
   margin-right: auto;
   margin-left: auto;
   grid-template-areas:
+    "input input"
     "info map";
 }
 
 .info {
   height: 100%;
   color: #e0e1dd;
-
+  padding: 0.8em 0.8em 0.8em 0.8em;
   box-sizing: border-box;
   border: 2px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
   background-color: #778da9;
-  grid-template-rows: 200px auto auto;
-  grid-gap: 10px 5px;
+  grid-template-rows: 300px 100px auto 400px 36px;
   grid-template-areas:
-    "input"
-    "selected"
-    "filter";
+    "info"
+    "srcdes"
+    "info2"
+    "info3"
+    "button";
 }
 
 .theme-color-2 {
@@ -191,11 +194,7 @@ body {
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
-  background: #415a77; 
-  overflow: auto;
-  overflow-x: auto;
-  white-space: normal;
-  padding: 2%;
+  background: #415a77;
 }
 
 .inputSetting {
@@ -208,7 +207,7 @@ body {
 }
 
 .inputSec {
-  height: 100px; 
+  height: 100px;
   display: block;
 }
 
@@ -405,7 +404,7 @@ body {
 }
 
 .signup-2 {
-  text-align: center; 
+  text-align: center;
   font-size: 40px;
 }
 
@@ -414,7 +413,7 @@ body {
 }
 
 .signup-done {
-  text-align: right; 
+  text-align: right;
   padding-right: 25px;
 }
 
@@ -458,8 +457,8 @@ body {
 }
 
 .view-button2 {
-  height: 36px; 
-  width: 36px; 
+  height: 36px;
+  width: 36px;
   min-width: 36px;
   margin-top: 5px;
 }
@@ -543,8 +542,8 @@ body {
 }
 
 .infopageButton {
-  height: 36px; 
-  width: 36px; 
+  height: 36px;
+  width: 36px;
   min-width: 36px;
   margin-bottom: 2px;
 }
@@ -576,5 +575,5 @@ body {
   font-size: 16px; /* Increase font-size */
   padding: 12px 20px 12px 40px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
-  border-radius: 0.4em;
+  margin-bottom: 12px; /* Add some space below the input */
 }
