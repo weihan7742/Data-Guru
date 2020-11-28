@@ -119,8 +119,6 @@ var chipOutput = []; // Store unique categories
 
 // Function to select chip 
 function selectFunction(value){
-    console.log(markerCategory);
-    console.log("Clicked successful!"); // Testing purpose
     
     // Check if value is in list already
     const chipExist = chipOutput.includes(value);

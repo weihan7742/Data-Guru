@@ -154,35 +154,28 @@ body {
   width: 98%;
   display: grid;
   grid-template-columns: 350px auto;
-  grid-template-rows: 100px auto;
   grid-gap: 10px 5px;
   margin-right: auto;
   margin-left: auto;
   grid-template-areas:
-    "input input"
     "info map";
 }
 
 .info {
   height: 100%;
   color: #e0e1dd;
-  padding: 0.8em 0.8em 0.8em 0.8em;
+
   box-sizing: border-box;
   border: 2px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
   background-color: #778da9;
-  grid-template-areas:
-    "info"
-    "srcdes"
-    "info2"
-    "info3"
-    "button"
-    "input"
-    "selected"
-    "filter";;
   grid-template-rows: 200px auto auto;
   grid-gap: 10px 5px;
+  grid-template-areas:
+    "input"
+    "selected"
+    "filter";
 }
 
 .theme-color-2 {
@@ -198,7 +191,11 @@ body {
   border: 1px solid #aaa;
   box-shadow: 0 1px 0 1px rgba(0, 0, 0, 0.04);
   border-radius: 0.5em;
-  background: #415a77;
+  background: #415a77; 
+  overflow: auto;
+  overflow-x: auto;
+  white-space: normal;
+  padding: 2%;
 }
 
 .inputSetting {
@@ -468,7 +465,9 @@ body {
 }
 
 .board-2 {
-  height: 88%;
+  min-height: 700px;
+  overflow: auto;
+  height: 700px;
 }
 
 /* ----------summarypage.html section---------- */
@@ -577,5 +576,5 @@ body {
   font-size: 16px; /* Increase font-size */
   padding: 12px 20px 12px 40px; /* Add some padding */
   border: 1px solid #ddd; /* Add a grey border */
-  margin-bottom: 12px; /* Add some space below the input */
+  border-radius: 0.4em;
 }
