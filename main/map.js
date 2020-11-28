@@ -1,12 +1,14 @@
 
-var arr = [];
-var markerLocation = [];
+var dataStorage = [];
+var markerCategory = {};
 var result;
+var map;
+var plottedMarker = {};
 
 // Initialize map
 function initMap(){
 
-    retrieveJSON();
+    retrieveMarkerData('test_csv.json');
     getData();
 
     var options = {
@@ -14,14 +16,16 @@ function initMap(){
       center:{lat:3.1390,lng:101.6869}
     }
 
-    var map = new google.maps.Map(document.getElementById('map'),options);
-
-    for(var i=0; i<arr.length; i++){
-      addMarker(arr[i],map);
-      markerLocation.push(arr[i]);
-    } 
-
-    console.log(markerLocation);
+    map = new google.maps.Map(document.getElementById('map'),options);
+    var count = 1;
+    for(var i=0; i<dataStorage.length; i++){
+      if(typeof markerCategory[dataStorage[i].category] == "undefined"){
+        markerCategory[dataStorage[i].category] = [];
+        markerCategory[dataStorage[i].category].push(dataStorage[i]);
+      } else{
+        markerCategory[dataStorage[i].category].push(dataStorage[i]);
+      }
+    }  
 
     // Adding geojson data 
     map.data.loadGeoJson(
@@ -30,11 +34,11 @@ function initMap(){
 }
 
 // Retrieve raw markers data
-function retrieveJSON(){
+function retrieveMarkerData(file){
   var jsonData= (function() {
     $.ajax({
         type:'GET',
-        url:'test_csv.json',
+        url: file,
         dataType:'json',
         async:false,
         success:function(data){
@@ -52,7 +56,7 @@ function getData(){
     tempDict["coords"] = {lat:result[i].Lat, lng: result[i].Lng};
     tempDict["content"] = '<p>'+result[i].Name+'</p>';
     tempDict["category"] = result[i].Category;
-    arr.push(tempDict);
+    dataStorage.push(tempDict);
   }
 }
 
@@ -63,6 +67,14 @@ function addMarker(props,currentMap){
     map: currentMap,
     icon: props.iconImage
 });
+
+    // Store markers which are plotted
+    if(typeof plottedMarker[props.category] == "undefined"){
+      plottedMarker[props.category] = [];
+      plottedMarker[props.category].push(marker);
+    } else{
+      plottedMarker[props.category].push(marker);
+    }
 
     // Check for custom icon
     if(props.iconImage){
@@ -111,6 +123,7 @@ var chipOutput = []; // Store unique categories
 
 // Function to select chip 
 function selectFunction(value){
+    console.log(markerCategory);
     console.log("Clicked successful!"); // Testing purpose
     
     // Check if value is in list already
@@ -122,12 +135,23 @@ function selectFunction(value){
     }
 
     document.getElementById('chipDisplay').innerHTML = displayChip();
+    displayMarker();
 }
 
 // Function to delete selected chip
 function deleteChip(index){
+  // Loop through plotted marker
+  let tempMarkers = plottedMarker[chipOutput[index]];
+
+  for(i=0;i<tempMarkers.length;i++){
+    tempMarkers[i].setMap(null); 
+  }
+
+  delete plottedMarker[chipOutput[index]]; // Clear markers
+
   chipOutput.splice(index,1); 
   document.getElementById('chipDisplay').innerHTML = displayChip();
+  displayChip();
 }
 
 // Function to display chip
@@ -149,5 +173,11 @@ function displayChip(){
 // Display marker 
 function displayMarker(){
   // loop through chipoutput
+  for(i=0;i<chipOutput.length;i++){
+    let tempArr = markerCategory[chipOutput[i]];
+    // Loop through all ther markers
+    for(j=0;j<tempArr.length;j++){
+      addMarker(tempArr[j],map);
+    }
+  }
 }
-
