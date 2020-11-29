@@ -28,7 +28,7 @@ function initMap(){
     for(i=0;i<mukimFiles.length;i++){
       retrieveMukimJson(mukimFiles[i]);
     }
-    retrieveDistrictJson('complete_district_json.json');
+    retrieveDistrictJson('final_district_geojson.json');
     formatPropertyMarker();
     getData();
 
@@ -51,7 +51,7 @@ function initMap(){
       }
     }
 
-    // Adding mukim geojson data
+    // Adding geojson data
     for(i=0;i<mukimJson.length;i++){
       map.data.addGeoJson(mukimJson[i]);
     }
