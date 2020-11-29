@@ -183,10 +183,9 @@ function displayChip(){
   for(i=0;i<chipOutput.length;i++){
     output += `<div class="mdl-chip mdl-chip--contact mdl-chip--deletable">
     <span class="mdl-chip__contact mdl-color-text--white theme-color-2">${i + 1}</span>
-    <span class="mdl-chip__text default-font" style="width: 150px;">${chipOutput[i]}</span>
+    <span class="mdl-chip__text default-font" style="width: fit-content;">${chipOutput[i]}</span>
     <a class="mdl-chip__action"  onclick="deleteChip(${i})"><i class="material-icons">cancel</i></a>
-  </div>
-  <br/>`;
+  </div>`;
   }
 
   return output;

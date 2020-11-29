@@ -62,7 +62,8 @@ body {
   white-space: nowrap;
   margin: 0 auto;
   user-select: none;
-  background-color: #091945;
+  border-radius: 0.2em;
+  background-color:  #fdb745;
   font-size: 64px;
   color: #e0e1dd;
 
@@ -109,7 +110,6 @@ body {
   margin-right: auto;
   margin-left: auto;
   grid-template-areas:
-    "input input"
     "info map";
 }
 
@@ -124,10 +124,8 @@ body {
   grid-gap: 10px 5px;
   grid-template-areas:
     "info"
-    "srcdes"
-    "info2"
-    "info3"
-    "button";
+    "selected"
+    "filter";
 }
 
 .theme-color-2 {
@@ -158,7 +156,6 @@ body {
   max-height: 500px;
   margin-top: 1px;
   border-bottom-left-radius: 1em;
-  border-bottom-right-radius: 1em;
 }
 
 #info {
@@ -196,6 +193,9 @@ body {
   border-top-left-radius: 1em;
   border-top-right-radius: 1em;
   background-color: #fca311;
+}
+#categoryInput:hover {
+  background-color: #f8ba56;
 }
 
 button {
