@@ -29,6 +29,7 @@ function initMap(){
       retrieveMukimJson(mukimFiles[i]);
     }
     retrieveDistrictJson('gadm36_MYS_2.geojson');
+    retrievePopulationCSV('district_population.csv');
     formatPropertyMarker();
     getData();
 
@@ -321,5 +322,19 @@ function retrieveDistrictJson(file){
         }
     });
     return districtJson;
+  })();
+}
+function retrievePopulationCSV(file){
+  var csvData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'text',
+        async:false,
+        success:function(data){
+            population_data = data;
+        }
+    });
+    return population_data;
   })();
 }
