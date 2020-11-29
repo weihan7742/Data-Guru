@@ -49,9 +49,9 @@ function initMap(){
       } else{
         markerCategory[dataStorage[i].category].push(dataStorage[i]);
       }
-    }  
+    }
 
-    // Adding mukim geojson data 
+    // Adding mukim geojson data
     for(i=0;i<mukimJson.length;i++){
       map.data.addGeoJson(mukimJson[i]);
     }
@@ -133,7 +133,7 @@ function filterFunction() {
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName('li');
-    
+
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
       a = li[i].getElementsByTagName("button")[0];
@@ -148,12 +148,12 @@ function filterFunction() {
 
 var chipOutput = []; // Store unique categories
 
-// Function to select chip 
+// Function to select chip
 function selectFunction(value){
-    
+
     // Check if value is in list already
     const chipExist = chipOutput.includes(value);
-    
+
     // Add value if not exist
     if(!chipExist){
       chipOutput.push(value);
@@ -169,12 +169,12 @@ function deleteChip(index){
   let tempMarkers = plottedMarker[chipOutput[index]];
 
   for(i=0;i<tempMarkers.length;i++){
-    tempMarkers[i].setMap(null); 
+    tempMarkers[i].setMap(null);
   }
 
   delete plottedMarker[chipOutput[index]]; // Clear markers
 
-  chipOutput.splice(index,1); 
+  chipOutput.splice(index,1);
   document.getElementById('chipDisplay').innerHTML = displayChip();
   displayChip();
 }
@@ -182,19 +182,19 @@ function deleteChip(index){
 // Function to display chip
 function displayChip(){
   let output = ``; // To be printed
-  // Print out value 
+  // Print out value
   for(i=0;i<chipOutput.length;i++){
     output += `<div class="mdl-chip mdl-chip--contact mdl-chip--deletable">
     <span class="mdl-chip__contact mdl-color-text--white theme-color-2">${i + 1}</span>
-    <span class="mdl-chip__text default-font" style="width: auto;">${chipOutput[i]}</span>
-    <a class="mdl-chip__action"><i class="material-icons" onclick="deleteChip(${i})">cancel</i></a>
-  </div>`; 
+    <span class="mdl-chip__text default-font" style="width: fit-content;">${chipOutput[i]}</span>
+    <a class="mdl-chip__action"  onclick="deleteChip(${i})"><i class="material-icons">cancel</i></a>
+  </div>`;
   }
 
   return output;
 }
 
-// Display marker 
+// Display marker
 function displayMarker(){
   // loop through chipoutput
   for(i=0;i<chipOutput.length;i++){
@@ -228,8 +228,8 @@ The codes below are for property price related data
 ----------------------------------------------------------------------------------------------------
 */
 
-var showPropertyBool = false; 
-var propertyDataStorage; 
+var showPropertyBool = false;
+var propertyDataStorage;
 var propertyMarkers = [];
 
 // Retrieve raw markers data
@@ -253,7 +253,7 @@ function formatPropertyMarker(){
   for(i=0; i<propertyDataStorage.length;i++){
     let tempDict ={};
     tempDict["coords"] = {lat:result[i].Lat, lng: result[i].Lng};
-    tempDict["content"] = 
+    tempDict["content"] =
     `<dl>
     <b><dt>Name</dt></b>
     <dd>${propertyDataStorage[i].name}</dd>
@@ -280,7 +280,7 @@ function showProperty(){
     // Loop through all property markers
     for(i=0; i<propertyMarkers.length;i++){
       addMarker(propertyMarkers[i],map);
-    } 
+    }
   } else {
     for(j=0; j<plottedMarker['property'].length;j++){
       plottedMarker['property'][j].setMap(null);
