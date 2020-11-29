@@ -1,15 +1,32 @@
+/*
+Hardcode values
+*/
+mukimFiles = ['BandarKlang.geojson',
+              'BANDARPETALINGJAYA.geojson',
+              'bestariJaya.geojson',
+              'BUKITRAJA.geojson',
+              'Ijok.geojson',
+              'jeram.geojson',
+              'kapar.geojson',
+              'Morib.geojson',
+              'Ulu Kelang.geojson']
+
 
 var dataStorage = [];
 var markerCategory = {};
 var result;
 var map;
 var plottedMarker = {};
+var mukimJson = [];
 
 // Initialize map
 function initMap(){
 
     retrieveMarkerData('googlemapsdata.json');
     retrievePropertyData('malaysia_commercial_prop.json');
+    for(i=0;i<mukimFiles.length;i++){
+      retrieveMukimJson(mukimFiles[i]);
+    }
     formatPropertyMarker();
     getData();
 
@@ -32,10 +49,10 @@ function initMap(){
       }
     }  
 
-    // Adding geojson data 
-    map.data.loadGeoJson(
-        "https://storage.googleapis.com/mapsdevsite/json/google.json"
-    )
+    // Adding mukim geojson data 
+    for(i=0;i<mukimJson.length;i++){
+      map.data.addGeoJson(mukimJson[i]);
+    }
 }
 
 // Retrieve raw markers data
@@ -84,6 +101,11 @@ function addMarker(props,currentMap){
     marker.addListener('mouseout',function(){
         infoWindow.close(map,marker)
     })
+
+    marker.addListener("click", () => {
+      map.setZoom(14);
+      map.setCenter(marker.getPosition());
+    });
 
     // Store markers which are plotted
     if(typeof plottedMarker[props.category] == "undefined"){
@@ -262,4 +284,25 @@ function showProperty(){
     }
     delete plottedMarker['property'];
   }
+}
+
+/*
+----------------------------------------------------------------------------------------------------
+The codes below are for property price related data
+----------------------------------------------------------------------------------------------------
+*/
+function retrieveMukimJson(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+            mukimJson.push(data);
+            console.log(file);
+        }
+    });
+    return mukimJson;
+  })();
 }
