@@ -18,6 +18,7 @@ var result;
 var map;
 var plottedMarker = {};
 var mukimJson = [];
+var districtJson;
 
 // Initialize map
 function initMap(){
@@ -27,6 +28,7 @@ function initMap(){
     for(i=0;i<mukimFiles.length;i++){
       retrieveMukimJson(mukimFiles[i]);
     }
+    retrieveDistrictJson('gadm36_MYS_2.geojson');
     formatPropertyMarker();
     getData();
 
@@ -53,6 +55,7 @@ function initMap(){
     for(i=0;i<mukimJson.length;i++){
       map.data.addGeoJson(mukimJson[i]);
     }
+    map.data.addGeoJson(districtJson);
 }
 
 // Retrieve raw markers data
@@ -288,7 +291,7 @@ function showProperty(){
 
 /*
 ----------------------------------------------------------------------------------------------------
-The codes below are for property price related data
+The codes below are for chloropeth map related
 ----------------------------------------------------------------------------------------------------
 */
 function retrieveMukimJson(file){
@@ -300,9 +303,23 @@ function retrieveMukimJson(file){
         async:false,
         success:function(data){
             mukimJson.push(data);
-            console.log(file);
         }
     });
     return mukimJson;
+  })();
+}
+
+function retrieveDistrictJson(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+            districtJson = data;
+        }
+    });
+    return districtJson;
   })();
 }
