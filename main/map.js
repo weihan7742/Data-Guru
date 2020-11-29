@@ -28,7 +28,7 @@ function initMap(){
     for(i=0;i<mukimFiles.length;i++){
       retrieveMukimJson(mukimFiles[i]);
     }
-    retrieveDistrictJson('gadm36_MYS_2.geojson');
+    retrieveDistrictJson('complete_district_json.json');
     formatPropertyMarker();
     getData();
 
