@@ -8,7 +8,9 @@ var plottedMarker = {};
 // Initialize map
 function initMap(){
 
-    retrieveMarkerData('test_csv.json');
+    retrieveMarkerData('googlemapsdata.json');
+    retrievePropertyData('malaysia_commercial_prop.json');
+    formatPropertyMarker();
     getData();
 
     var options = {
@@ -17,6 +19,10 @@ function initMap(){
     }
 
     map = new google.maps.Map(document.getElementById('map'),options);
+
+    const trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
     for(var i=0; i<dataStorage.length; i++){
       if(typeof markerCategory[dataStorage[i].category] == "undefined"){
         markerCategory[dataStorage[i].category] = [];
@@ -189,4 +195,71 @@ for (i = 0; i < coll.length; i++) {
       content.style.display = "block";
     }
   });
+}
+
+/*
+----------------------------------------------------------------------------------------------------
+The codes below are for property price related data
+----------------------------------------------------------------------------------------------------
+*/
+
+var showPropertyBool = false; 
+var propertyDataStorage; 
+var propertyMarkers = [];
+
+// Retrieve raw markers data
+function retrievePropertyData(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+            propertyDataStorage = data;
+        }
+    });
+    return propertyDataStorage;
+  })();
+}
+
+// Format property data to add markers
+function formatPropertyMarker(){
+  for(i=0; i<propertyDataStorage.length;i++){
+    let tempDict ={};
+    tempDict["coords"] = {lat:result[i].Lat, lng: result[i].Lng};
+    tempDict["content"] = 
+    `<dl>
+    <b><dt>Name</dt></b>
+    <dd>${propertyDataStorage[i].name}</dd>
+    <b><dt>Price</dt></b>
+    <dd>RM${propertyDataStorage[i].prices}</dd>
+    </dl>`
+    tempDict["iconImage"] = "https://img.icons8.com/emoji/48/000000/house-emoji.png";
+    tempDict['category'] = "property";
+    propertyMarkers.push(tempDict);
+  }
+}
+
+// Function to show or hide property markers when user press the button
+function showProperty(){
+  if(document.getElementById('property').textContent == "Show Property Price"){
+    document.getElementById('property').textContent = "Hide Property Price"
+    showPropertyBool = true;
+  } else{
+    document.getElementById('property').textContent = "Show Property Price"
+    showPropertyBool = false;
+  }
+
+  if(showPropertyBool){
+    // Loop through all property markers
+    for(i=0; i<propertyMarkers.length;i++){
+      addMarker(propertyMarkers[i],map);
+    } 
+  } else {
+    for(j=0; j<plottedMarker['property'].length;j++){
+      plottedMarker['property'][j].setMap(null);
+    }
+    delete plottedMarker['property'];
+  }
 }
