@@ -1,14 +1,33 @@
+/*
+Hardcode values
+*/
+mukimFiles = ['BandarKlang.geojson',
+              'BANDARPETALINGJAYA.geojson',
+              'bestariJaya.geojson',
+              'BUKITRAJA.geojson',
+              'Ijok.geojson',
+              'jeram.geojson',
+              'kapar.geojson',
+              'Morib.geojson',
+              'Ulu Kelang.geojson']
+
 
 var dataStorage = [];
 var markerCategory = {};
 var result;
 var map;
 var plottedMarker = {};
+var mukimJson = [];
 
 // Initialize map
 function initMap(){
 
     retrieveMarkerData('googlemapsdata.json');
+    retrievePropertyData('malaysia_commercial_prop.json');
+    for(i=0;i<mukimFiles.length;i++){
+      retrieveMukimJson(mukimFiles[i]);
+    }
+    formatPropertyMarker();
     getData();
 
     var options = {
@@ -17,7 +36,10 @@ function initMap(){
     }
 
     map = new google.maps.Map(document.getElementById('map'),options);
-    var count = 1;
+
+    const trafficLayer = new google.maps.TrafficLayer();
+    trafficLayer.setMap(map);
+
     for(var i=0; i<dataStorage.length; i++){
       if(typeof markerCategory[dataStorage[i].category] == "undefined"){
         markerCategory[dataStorage[i].category] = [];
@@ -25,12 +47,12 @@ function initMap(){
       } else{
         markerCategory[dataStorage[i].category].push(dataStorage[i]);
       }
-    }  
+    }
 
-    // Adding geojson data 
-    map.data.loadGeoJson(
-        "https://storage.googleapis.com/mapsdevsite/json/google.json"
-    )
+    // Adding mukim geojson data
+    for(i=0;i<mukimJson.length;i++){
+      map.data.addGeoJson(mukimJson[i]);
+    }
 }
 
 // Retrieve raw markers data
@@ -80,6 +102,11 @@ function addMarker(props,currentMap){
         infoWindow.close(map,marker)
     })
 
+    marker.addListener("click", () => {
+      map.setZoom(14);
+      map.setCenter(marker.getPosition());
+    });
+
     // Store markers which are plotted
     if(typeof plottedMarker[props.category] == "undefined"){
       plottedMarker[props.category] = [];
@@ -103,7 +130,7 @@ function filterFunction() {
     filter = input.value.toUpperCase();
     ul = document.getElementById("myUL");
     li = ul.getElementsByTagName('li');
-    
+
     // Loop through all list items, and hide those who don't match the search query
     for (i = 0; i < li.length; i++) {
       a = li[i].getElementsByTagName("button")[0];
@@ -118,12 +145,12 @@ function filterFunction() {
 
 var chipOutput = []; // Store unique categories
 
-// Function to select chip 
+// Function to select chip
 function selectFunction(value){
-    
+
     // Check if value is in list already
     const chipExist = chipOutput.includes(value);
-    
+
     // Add value if not exist
     if(!chipExist){
       chipOutput.push(value);
@@ -139,33 +166,33 @@ function deleteChip(index){
   let tempMarkers = plottedMarker[chipOutput[index]];
 
   for(i=0;i<tempMarkers.length;i++){
-    tempMarkers[i].setMap(null); 
+    tempMarkers[i].setMap(null);
   }
 
   delete plottedMarker[chipOutput[index]]; // Clear markers
 
-  chipOutput.splice(index,1); 
+  chipOutput.splice(index,1);
   document.getElementById('chipDisplay').innerHTML = displayChip();
   displayChip();
 }
 
 // Function to display chip
 function displayChip(){
-  let output = ` `; // To be printed
-  // Print out value 
+  let output = ``; // To be printed
+  // Print out value
   for(i=0;i<chipOutput.length;i++){
-    output += `    <div class="mdl-chip mdl-chip--contact mdl-chip--deletable" onclick="deleteChip(${i})">
+    output += `<div class="mdl-chip mdl-chip--contact mdl-chip--deletable">
     <span class="mdl-chip__contact mdl-color-text--white theme-color-2">${i + 1}</span>
     <span class="mdl-chip__text default-font" style="width: 150px;">${chipOutput[i]}</span>
-    <a class="mdl-chip__action"><i class="material-icons">cancel</i></a>
+    <a class="mdl-chip__action"  onclick="deleteChip(${i})"><i class="material-icons">cancel</i></a>
   </div>
-  <br/>`; 
+  <br/>`;
   }
 
   return output;
 }
 
-// Display marker 
+// Display marker
 function displayMarker(){
   // loop through chipoutput
   for(i=0;i<chipOutput.length;i++){
@@ -175,4 +202,108 @@ function displayMarker(){
       addMarker(tempArr[j],map);
     }
   }
+}
+
+//expandable
+var coll = document.getElementsByClassName("collapsible");
+var i;
+
+for (i = 0; i < coll.length; i++) {
+  coll[i].addEventListener("click", function() {
+    this.classList.toggle("active");
+    var content = this.nextElementSibling;
+    if (content.style.display === "block") {
+      content.style.display = "none";
+    } else {
+      content.style.display = "block";
+    }
+  });
+}
+
+/*
+----------------------------------------------------------------------------------------------------
+The codes below are for property price related data
+----------------------------------------------------------------------------------------------------
+*/
+
+var showPropertyBool = false;
+var propertyDataStorage;
+var propertyMarkers = [];
+
+// Retrieve raw markers data
+function retrievePropertyData(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+            propertyDataStorage = data;
+        }
+    });
+    return propertyDataStorage;
+  })();
+}
+
+// Format property data to add markers
+function formatPropertyMarker(){
+  for(i=0; i<propertyDataStorage.length;i++){
+    let tempDict ={};
+    tempDict["coords"] = {lat:result[i].Lat, lng: result[i].Lng};
+    tempDict["content"] =
+    `<dl>
+    <b><dt>Name</dt></b>
+    <dd>${propertyDataStorage[i].name}</dd>
+    <b><dt>Price</dt></b>
+    <dd>RM${propertyDataStorage[i].prices}</dd>
+    </dl>`
+    tempDict["iconImage"] = "https://img.icons8.com/emoji/48/000000/house-emoji.png";
+    tempDict['category'] = "property";
+    propertyMarkers.push(tempDict);
+  }
+}
+
+// Function to show or hide property markers when user press the button
+function showProperty(){
+  if(document.getElementById('property').textContent == "Show Property Price"){
+    document.getElementById('property').textContent = "Hide Property Price"
+    showPropertyBool = true;
+  } else{
+    document.getElementById('property').textContent = "Show Property Price"
+    showPropertyBool = false;
+  }
+
+  if(showPropertyBool){
+    // Loop through all property markers
+    for(i=0; i<propertyMarkers.length;i++){
+      addMarker(propertyMarkers[i],map);
+    }
+  } else {
+    for(j=0; j<plottedMarker['property'].length;j++){
+      plottedMarker['property'][j].setMap(null);
+    }
+    delete plottedMarker['property'];
+  }
+}
+
+/*
+----------------------------------------------------------------------------------------------------
+The codes below are for property price related data
+----------------------------------------------------------------------------------------------------
+*/
+function retrieveMukimJson(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+            mukimJson.push(data);
+            console.log(file);
+        }
+    });
+    return mukimJson;
+  })();
 }
