@@ -20,6 +20,12 @@ var plottedMarker = {};
 var mukimJson = [];
 var districtJson;
 var choropethJson;
+var premiseData;
+var premiseDataStorage = {};
+var premiseBusinessData;
+var ranking = [];
+var districtDict = {};
+var items;
 
 // Initialize map
 function initMap(){
@@ -30,6 +36,8 @@ function initMap(){
     //   retrieveMukimJson(mukimFiles[i]);
     // }
     // retrieveDistrictJson("final_district_geojson.json");
+    retrievePremiseJson("premise_data.json");
+    retrievePremiseBusinessJson("final_district_business.json");
     formatPropertyMarker();
     getData();
 
@@ -61,7 +69,6 @@ function initMap(){
     //   fillColor:'transparent'
     // });
 }
-
 // Retrieve raw markers data
 function retrieveMarkerData(file){
   var jsonData= (function() {
@@ -163,6 +170,17 @@ function selectFunction(value){
       chipOutput.push(value);
     }
 
+    if (Object.entries(premiseDataStorage).length === 0 && premiseDataStorage.constructor === Object){
+      easePremiseAccess();
+    }
+    
+    // Arrange the ranking
+    arrangeRanking();
+    // Find  the ranking
+    findRanking();
+    // Display the ranking
+    displayRanking();
+
     document.getElementById('chipDisplay').innerHTML = displayChip();
     displayMarker();
 }
@@ -179,6 +197,18 @@ function deleteChip(index){
   delete plottedMarker[chipOutput[index]]; // Clear markers
 
   chipOutput.splice(index,1);
+
+  // Refind the rankings 
+  districtDict = {}
+
+  displayRanking(true);
+  items = [];
+
+  arrangeRanking()
+  findRanking()
+  displayRanking();
+
+
   document.getElementById('chipDisplay').innerHTML = displayChip();
   displayChip();
 }
@@ -328,72 +358,6 @@ function retrieveDistrictJson(file){
   })();
 }
 
-/*
-For image purposes
-*/
-// function magnify(imgID, zoom) {
-//   var img, glass, w, h, bw;
-//   img = document.getElementById(imgID);
-
-//   /* Create magnifier glass: */
-//   glass = document.createElement("DIV");
-//   glass.setAttribute("class", "img-magnifier-glass");
-
-//   /* Insert magnifier glass: */
-//   img.parentElement.insertBefore(glass, img);
-
-//   /* Set background properties for the magnifier glass: */
-//   glass.style.backgroundImage = "url('" + img.src + "')";
-//   glass.style.backgroundRepeat = "no-repeat";
-//   glass.style.backgroundSize = (img.width * zoom) + "px " + (img.height * zoom) + "px";
-//   bw = 3;
-//   w = glass.offsetWidth / 2;
-//   h = glass.offsetHeight / 2;
-
-//   /* Execute a function when someone moves the magnifier glass over the image: */
-//   glass.addEventListener("mousemove", moveMagnifier);
-//   img.addEventListener("mousemove", moveMagnifier);
-
-//   /*and also for touch screens:*/
-//   glass.addEventListener("touchmove", moveMagnifier);
-//   img.addEventListener("touchmove", moveMagnifier);
-//   function moveMagnifier(e) {
-//     var pos, x, y;
-//     /* Prevent any other actions that may occur when moving over the image */
-//     e.preventDefault();
-//     /* Get the cursor's x and y positions: */
-//     pos = getCursorPos(e);
-//     x = pos.x;
-//     y = pos.y;
-//     /* Prevent the magnifier glass from being positioned outside the image: */
-//     if (x > img.width - (w / zoom)) {x = img.width - (w / zoom);}
-//     if (x < w / zoom) {x = w / zoom;}
-//     if (y > img.height - (h / zoom)) {y = img.height - (h / zoom);}
-//     if (y < h / zoom) {y = h / zoom;}
-//     /* Set the position of the magnifier glass: */
-//     glass.style.left = (x - w) + "px";
-//     glass.style.top = (y - h) + "px";
-//     /* Display what the magnifier glass "sees": */
-//     glass.style.backgroundPosition = "-" + ((x * zoom) - w + bw) + "px -" + ((y * zoom) - h + bw) + "px";
-//   }
-
-//   function getCursorPos(e) {
-//     var a, x = 0, y = 0;
-//     e = e || window.event;
-//     /* Get the x and y positions of the image: */
-//     a = img.getBoundingClientRect();
-//     /* Calculate the cursor's x and y coordinates, relative to the image: */
-//     x = e.pageX - a.left;
-//     y = e.pageY - a.top;
-//     /* Consider any page scrolling: */
-//     x = x - window.pageXOffset;
-//     y = y - window.pageYOffset;
-//     return {x : x, y : y};
-//   }
-// }
-
-// magnify("myimage", 4);
-
 function imageZoom(imgID, resultID) {
   var img, lens, result, cx, cy;
   img = document.getElementById(imgID);
@@ -451,3 +415,104 @@ function imageZoom(imgID, resultID) {
 }
 
 imageZoom("myimage", "myresult");
+
+/*
+----------------------------------------------------------------------------------------------------
+The codes below are for premise related calculation
+----------------------------------------------------------------------------------------------------
+*/
+function retrievePremiseJson(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+           premiseData = data;
+        }
+    });
+    return premiseData;
+  })();
+}
+
+function retrievePremiseBusinessJson(file){
+  var jsonData= (function() {
+    $.ajax({
+        type:'GET',
+        url: file,
+        dataType:'json',
+        async:false,
+        success:function(data){
+           premiseBusinessData = data;
+        }
+    });
+    return premiseBusinessData;
+  })();
+}
+
+function easePremiseAccess(){
+  for(i=0;i<premiseData.length;i++){
+    key = Object.keys(premiseData[i])[0];
+    premiseDataStorage[Object.keys(premiseData[i])[0]] = premiseData[i][key];
+  }
+}
+
+function arrangeRanking(){
+  // Loop through all the chips selected
+  for(i=0;i<chipOutput.length;i++){
+    // Loop through all the district values in each premise
+    premise = chipOutput[i]
+    keys = Object.keys(premiseDataStorage[premise])
+    for(j=0;j<keys.length;j++){
+      let someDistrictValue = premiseDataStorage[premise][keys[j]]
+      if(typeof districtDict[keys[j]] == "undefined"){
+        districtDict[keys[j]] = someDistrictValue;
+      } else{
+        districtDict[keys[j]] += someDistrictValue;
+      }
+    }
+    for(j=0;j<keys.length;j++){
+      districtDict[keys[j]] = districtDict[keys[j]]/premiseBusinessData[0][keys[j]][0];
+    }
+  }
+}
+
+function findRanking(){
+  // // Loop through district dict
+  // keys = Object.keys(districtDict);
+  
+  // Create items array
+  items = Object.keys(districtDict).map(function(key) {
+    return [key, districtDict[key]];
+  });
+  
+  // Sort the array based on the second element
+  items.sort(function(first, second) {
+    return second[1] - first[1];
+  });
+
+  items = items.slice(0, 10);
+  console.log(items);
+}
+
+function displayRanking(del){
+  for(i=0;i<items.length;i++){
+    let district_id = `ptp-district-${i+1}`;
+    let population_id = `ptp-${i+1}`;
+    var pop_to_business = items[i][1]*100000
+    var n = pop_to_business.toFixed(2);
+
+    if(i == 10){
+      break; 
+    }
+    if(del === true){
+      console.log(i);
+      document.getElementById(district_id).textContent = "N/A";
+      document.getElementById(population_id).textContent = "N/A";
+    } else{
+      document.getElementById(district_id).textContent = items[i][0];
+      document.getElementById(population_id).textContent = n;
+    }
+  }
+}
