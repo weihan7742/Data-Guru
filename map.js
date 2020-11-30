@@ -29,7 +29,7 @@ function initMap(){
     // for(i=0;i<mukimFiles.length;i++){
     //   retrieveMukimJson(mukimFiles[i]);
     // }
-    retrieveDistrictJson("final_district_geojson.json");
+    // retrieveDistrictJson("final_district_geojson.json");
     formatPropertyMarker();
     getData();
 
@@ -56,10 +56,10 @@ function initMap(){
     // for(i=0;i<mukimJson.length;i++){
     //   map.data.addGeoJson(mukimJson[i]);
     // }
-    map.data.addGeoJson(districtJson);
-    map.data.setStyle({
-      fillColor:'transparent'
-    });
+    // map.data.addGeoJson(districtJson);
+    // map.data.setStyle({
+    //   fillColor:'transparent'
+    // });
 }
 
 // Retrieve raw markers data
@@ -264,7 +264,7 @@ function formatPropertyMarker(){
     <b><dt>Price</dt></b>
     <dd>RM${propertyDataStorage[i].prices}</dd>
     </dl>`
-    tempDict["iconImage"] = "https://img.icons8.com/emoji/48/000000/house-emoji.png";
+    tempDict["iconImage"] = "https://img.icons8.com/emoji/20/000000/house-emoji.png";
     tempDict['category'] = "property";
     propertyMarkers.push(tempDict);
   }
