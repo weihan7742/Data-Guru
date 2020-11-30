@@ -38,6 +38,10 @@
         <div class="map-style" style="grid-area: map;height: 1000px;" id="map"></div>
         <!-- LHS Section -->
         <div class="info" style="grid-area: info">
+          <div>
+            <button id="property" onclick=showProperty()>Show Property Price</button>
+          </div>
+          
           <div style="grid-area: input;">
             <input type="text" id="categoryInput" onkeyup="filterFunction()" placeholder="Search for categories...">
           </div>
@@ -1998,10 +2002,6 @@
               </div>
             </center>
             </ul>
-
-            <div>
-              <button id="property" onclick=showProperty()>Show Property Price</button>
-            </div>
 
           </div>
         </div>
